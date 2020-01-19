@@ -1,7 +1,5 @@
 # IoT Docker
 
-### TODO
-
 ## Issues:
 
 - in general seems like containers can't communicate between each other
@@ -15,11 +13,6 @@
 - [ ] influxdb
 - [ ] chronograf (for influx)
 - [ ] grafana
-
-#### doc / tutorials / explenation how to:
-
-- backup and restore data to node-red and influx containers
-- add `package.json` dependencies to node-red
 
 #### Utils
 
