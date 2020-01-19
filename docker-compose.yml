@@ -87,3 +87,4 @@ services:
 
 networks:
   localnet:
+    name: localnet
