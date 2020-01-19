@@ -1,0 +1,6 @@
+volumes/chronograf/*
+volumes/grafana/*
+volumes/influxdb/*
+volumes/mosquitto/*
+volumes/node-red/*
+volumes/telegraf/*
