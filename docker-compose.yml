@@ -18,11 +18,6 @@ services:
   mosquitto:
     image: eclipse-mosquitto
     container_name: mosquitto
-    # altough I expose 1883 node-red still returns error:
-    # "Connection failed to broker: mqtt://localhost:1883"
-    expose:
-      - 1883
-      - 9001
     ports:
       - 1883:1883
       - 9001:9001
@@ -49,8 +44,6 @@ services:
     ports:
       - 10000:10000
       - 8888:8888
-    links:
-      - influxdb
     networks:
       - localnet
 
@@ -59,8 +52,6 @@ services:
     container_name: telegraf
     volumes:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
-    links:
-      - influxdb
     ports:
       - 8092:8092/udp
       - 8094:8094
@@ -75,9 +66,6 @@ services:
       - 3000:3000
     env_file:
       - "env.grafana"
-    user: "0"
-    links:
-      - influxdb
     volumes:
       # Data persistency
       # sudo mkdir -p ./volumes/grafana; chown 472:472 ./volumes/grafana/data
