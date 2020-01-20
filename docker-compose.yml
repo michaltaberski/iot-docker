@@ -4,7 +4,7 @@ version: "3.7"
 services:
   node-red:
     image: nodered/node-red:latest
-    container_name: node-red
+    hostname: "${ENV_TYPE}-nodered"
     environment:
       - TZ=Europe/Warsaw
     ports:
@@ -13,43 +13,46 @@ services:
       # it seems it doesn't work - `./volumes/node-red` is permanently empty
       - ./volumes/node-red:/data
     networks:
-      - localnet
+      iot-docker:
+        ipv4_address: ${NODERED_IP}
 
   mosquitto:
     image: eclipse-mosquitto
-    container_name: mosquitto
+    hostname: "${ENV_TYPE}-mosquitto"
     ports:
       - 1883:1883
       - 9001:9001
     volumes:
       - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
     networks:
-      - localnet
+      iot-docker:
+        ipv4_address: ${MOSQUITTO_IP}
 
   influxdb:
     image: influxdb:latest
-    container_name: influxdb
     volumes:
       - ./volumes/influxdb:/var/lib/influxdb
     ports:
       - 8086:8086
     networks:
-      - localnet
+      iot-docker:
+        ipv4_address: ${INFLUXDB_IP}
 
   chronograf:
     image: chronograf:latest
-    container_name: chronograf
+    hostname: "${ENV_TYPE}-chronograf"
     volumes:
       - ./volumes/chronograf:/var/lib/chronograf
     ports:
       - 10000:10000
       - 8888:8888
     networks:
-      - localnet
+      iot-docker:
+        ipv4_address: ${CHRONOGRAF_IP}
 
   telegraf:
     image: telegraf:latest
-    container_name: telegraf
+    hostname: "${ENV_TYPE}-telegram"
     volumes:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
     ports:
@@ -57,22 +60,28 @@ services:
       - 8094:8094
       - 8125:8125/udp
     networks:
-      - localnet
+      iot-docker:
+        ipv4_address: ${TELEGRAF_IP}
 
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana
+    hostname: "${ENV_TYPE}-grafana"
     ports:
       - 3000:3000
-    env_file:
-      - "env.grafana"
+    environment:
+      - GF_INSTALL_PLUGINS=$GF_INSTALL_PLUGINS
     volumes:
       # Data persistency
       # sudo mkdir -p ./volumes/grafana; chown 472:472 ./volumes/grafana/data
       - ./volumes/grafana:/var/lib/grafana
     networks:
-      - localnet
+      iot-docker:
+        ipv4_address: ${GRAFANA_IP}
 
 networks:
-  localnet:
-    name: localnet
+  iot-docker:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: ${NETWORK}
