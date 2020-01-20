@@ -8,11 +8,18 @@
 
 #### docker-compose including:
 
-- [ ] node-red
-- [ ] mosquitto (MQTT broker)
-- [ ] influxdb
-- [ ] chronograf (for influx)
-- [ ] grafana
+- [x] node-red
+- [x] mosquitto
+- [x] influxdb
+- [x] chronograf (for influx)
+- [x] telegraf (for influx)
+- [x] grafana
+
+#### Start / Stop / Logs
+
+- `./start.sh`
+- `./stop.sh`
+- `./log.sh`
 
 #### Utils
 
