@@ -6,20 +6,11 @@
 - - node-red can't connect to mosquitto log error: `Connection failed to broker: mqtt://localhost:1883`
 - - chronograf - it opens fine under `http://localhost:8888/` but once you try to connect it to influxdb `http://localhost:8086` it returns error
 
-#### docker-compose including:
-
-- [x] node-red
-- [x] mosquitto
-- [x] influxdb
-- [x] chronograf (for influx)
-- [x] telegraf (for influx)
-- [x] grafana
-
 #### Start / Stop / Logs
 
 - `./start.sh`
 - `./stop.sh`
-- `./log.sh`
+- `./log.sh` or `docker-compose logs -f nginx`
 
 #### Utils
 
