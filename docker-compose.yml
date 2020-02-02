@@ -78,6 +78,21 @@ services:
       iot-docker:
         ipv4_address: ${GRAFANA_IP}
 
+  nginx:
+    image: nginx
+    volumes:
+      - ./volumes/nginx/mysite.template:/etc/nginx/conf.d/mysite.template
+      - ./volumes/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"
+    environment:
+      # - NGINX_HOST=foobar.com
+      - NGINX_PORT=80
+
+    networks:
+      iot-docker:
+        ipv4_address: ${NGINX_IP}
+
 networks:
   iot-docker:
     driver: bridge
