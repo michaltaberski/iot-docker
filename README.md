@@ -15,6 +15,7 @@
 #### Utils
 
 - `docker container kill $(docker ps -q)` kill all running containers
+- `hostname -I | awk '{print $1;}'` my local ip
 
 #### interesting links
 
